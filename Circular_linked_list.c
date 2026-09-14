@@ -92,7 +92,7 @@ void InsertAtpos(){  //insert to the given position
     int pos,i=1;
     printf("enter the position u want to insert the data:");
         scanf("%d",&pos);
-    if(pos>getlength()||pos<1){
+    if(pos>getlength()+1||pos<1){
     printf("Invalid position");
 }
     else if(pos==1)
@@ -100,6 +100,9 @@ void InsertAtpos(){  //insert to the given position
             InsertAtBeg();
             
         }
+    else if(pos==getlength()+1){
+    InsertAtEnd();
+    }
     else{
             struct node*newnode,*current,*nextnode;
             current=head;
@@ -125,15 +128,16 @@ void InsertAtpos(){  //insert to the given position
     }
 }
 
-void deleteatbeg(){  //delete from beginning
+void deleteatbeg(){ 
+    temp=head; //delete from beginning
     if(head==NULL)
  {
      printf("list is empty");
  }
  else if(head==tail){
-    free(head);
      head=NULL;
      tail=NULL;
+     free(temp);
  }
  else{
      temp=head;
@@ -145,12 +149,14 @@ void deleteatbeg(){  //delete from beginning
 
 void deleteatend(){  //delete at end of the linked list
     struct node *current,*prev;
+    temp=head;
        if(head==NULL)
 {
     printf("list is empty");
 }
 else if(head==tail){
-   free(head);
+    head=tail=0;
+   free(temp);
 }
 else{
     current=head;
