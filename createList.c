@@ -1,3 +1,4 @@
+//SINGLY LINKED LIST
 #include<stdio.h>
 #include<stdlib.h>
   struct Node
@@ -6,97 +7,97 @@
      struct Node*next;
 
  };
- struct Node*head=NULL;
- struct Node*tail=NULL;
- struct Node*temp=NULL;
- int count=0;
-void CreateNode(int value){
+ 
+ struct LinkedList{
+ struct Node*head;
+ struct Node*tail;
+ struct Node*temp;
+ };
+void CreateNode(struct LinkedList *list, int value){
 
     struct Node*newNode;
     newNode=malloc(sizeof(struct Node));
     newNode->data=value;
     newNode->next=NULL;
-    if(head==NULL)
+    if(list->head==NULL)
     {
-        head=temp=newNode;
+        list->head=list->temp=newNode;
     }
     else
     {
-        temp->next=newNode;
-        temp=newNode;
+        list->temp->next=newNode;
+        list->temp=newNode;
     }
 
 }
 // print the linked list
-void PrintList()
+void PrintList(struct LinkedList *list)
 {
-    temp=head;
+    list->temp=list->head;
     printf("Linked List:");
-    while(temp!=NULL)
+    while(list->temp!=NULL)
     {
-        printf("%d ",temp->data);
-        temp=temp->next;
-        count++;
+        printf("%d ",list->temp->data);
+        list->temp=list->temp->next;
     }
     printf("\n");
-    printf("%d\n",count);
 }
 
-int getlength()
+int getlength(struct LinkedList *list)
 {
     int count=0;
-    temp=head;
-    while(temp!=NULL)
+    list->temp=list->head;
+    while(list->temp!=NULL)
     {
         count++;
-        temp=temp->next;
+        list->temp=list->temp->next;
     }
     return count;
 }
 //insert the node at the beginning of the linked list
-void InsertAtBeg()
+void InsertAtBeg(struct LinkedList *list)
 {
     struct Node*newNode;
     newNode=malloc(sizeof(struct Node));
     printf("Enter the data u want to insert at beginning:");
     scanf("%d",&newNode->data);
-    newNode->next=head;
-    head=newNode;
+    newNode->next=list->head;
+    list->head=newNode;
 }
 
 // insert the node at the end of the linked list
-void InsertAtEnd()
+void InsertAtEnd(struct LinkedList *list)
 {
     struct Node*newNode;
     newNode=malloc(sizeof(struct Node));
     printf("Enter the data u want to insert at end:");
     scanf("%d",&newNode->data);
     newNode->next=NULL;
-    temp=head;
-    while(temp->next!=NULL)
+    list->temp=list->head;
+    while(list->temp->next!=NULL)
     {
-        temp=temp->next;
+        list->temp=list->temp->next;
     }
-    temp->next=newNode;
+    list->temp->next=newNode;
 }
 
 //insert the node at the given position of the linked list
-void InsertAtPos()
+void InsertAtPos(struct LinkedList *list)
 {
     int pos,i=1;
     printf("enter the position do u want to insert a value:");
     scanf("%d",&pos);
-    if(pos>getlength())
+    if(pos>getlength(list)||pos<1)
     {
         printf("invalid position");
     }
     else if(pos==1)
     {
-        InsertAtBeg();
+        InsertAtBeg(list);
     }
-    else if(pos==getlength()+1)
+    else if(pos==getlength(list)+1)
     {
-        InsertAtEnd();
+        InsertAtEnd(list);
     }
     else
     {
@@ -104,94 +105,94 @@ void InsertAtPos()
     newNode=malloc(sizeof(struct Node));
     printf("Enter the data u want to insert at the position:");
     scanf("%d",&newNode->data);
-        temp=head;
+        list->temp=list->head;
         while(i<pos-1)
         {
-            temp=temp->next;
+            list->temp=list->temp->next;
             i++;
         }
-        newNode->next=temp->next;
-        temp->next=newNode;
+        newNode->next=list->temp->next;
+        list->temp->next=newNode;
     }
 }
 
 
 
 // delete the node at the end of the linked list
-void DeleteAtBeg()
+void DeleteAtBeg(struct LinkedList *list)
 {
-    if(head==NULL)
+    if(list->head==NULL)
     {
         printf("No data");
     }
     else
     {
-    temp=head;
-    head=temp->next;
-    free(temp);
+    list->temp=list->head;
+    list->head=list->temp->next;
+    free(list->temp);
     }
 }
 
 
 
 // delete the node at the end of the linked list
-void DeleteAtEnd()
+void DeleteAtEnd(struct LinkedList *list)
 {
     struct Node*prevNode;
-    temp=head;
-    while(temp->next!=NULL)
+    list->temp=list->head;
+    while(list->temp->next!=NULL)
     {
-        prevNode=temp;
-        temp=temp->next;
+        prevNode=list->temp;
+        list->temp=list->temp->next;
     }
-    if(temp==head)
+    if(list->temp==list->head)
     {
-        head=0;
-        free(temp);
+        list->head=0;
+        free(list->temp);
     }
     else
     {
         prevNode->next=NULL;
-        free(temp);
+        free(list->temp);
     }
 }
 
 //delete the node at the given position of the linked list
-void DeleteAtPos()
+void DeleteAtPos(struct LinkedList *list)
 {
     int pos,i=1;
     struct Node*nextNode;
-    temp=head;
+    list->temp=list->head;
     printf("enter position u want to delete:");
     scanf("%d",&pos);
-     if(pos>getlength())
+     if(pos>getlength(list)||pos<1)
     {
         printf("invalid position");
     }
     else if(pos==1)
     {
-        DeleteAtBeg();
+        DeleteAtBeg(list);
     }
-    else if(pos==getlength())
+    else if(pos==getlength(list))
     {
-        DeleteAtEnd();
+        DeleteAtEnd(list);
     }
     else{
      while(i<pos-1)
      {
-        temp=temp->next;
+        list->temp=list->temp->next;
         i++;
      }
     }
-    nextNode=temp->next;
-    temp->next=nextNode->next;
+    nextNode=list->temp->next;
+    list->temp->next=nextNode->next;
     free(nextNode);
 }
-void Reversed()
+void Reversed(struct LinkedList *list)
 {
     struct Node*prevNode,*nextNode,*currentNode;
     prevNode=0;
-    currentNode=nextNode=head;
+    currentNode=nextNode=list->head;
     while(nextNode!=NULL)
     {
         nextNode=nextNode->next;
@@ -199,22 +200,47 @@ void Reversed()
         prevNode=currentNode;
         currentNode=nextNode;
     }
-    head=prevNode;
+    list->head=prevNode;
+}
+
+void update(struct LinkedList *list){
+    int pos,i=1;
+    int newvalue;
+    list->temp=list->head;
+    printf("enter the position you want to update:");
+    scanf("%d",&pos);
+    if(pos>getlength(list) || pos<1)
+    {
+        printf("invalid position");
+    }
+    printf("enter the value u want to enter:");
+    scanf("%d",&newvalue);
+
+    for(i = 1; i < pos; i++ ) {
+
+        list -> temp = list -> temp -> next;
+    }
+
+    list->temp->data=newvalue;
 }
 
 
 //main function
 int main(){
+    struct LinkedList list;
+    list.head = NULL;
+    list.tail = NULL;
+    list.temp = NULL;
     int choice=1;
     int choose;
-    int con;
+    int con=1;
     while(choice!=0)
     {
     int data;
     int count=0;
     printf("enter the data:");
     scanf("%d",&data);
-    CreateNode(data);
+    CreateNode(&list, data);
     printf("do you want to continue?(1/0):");
     scanf("%d",&choice);
     }
@@ -230,44 +256,49 @@ int main(){
         printf("\n6.delete the node at the end of the linked list");
         printf("\n7.delete the node at the given position of the linked list");
         printf("\n8.reverse the linked list");
-        printf("\n9.exit");
+        printf("\n9.update the value");
+        printf("\n10.exit");
         printf("\nenter your choose:");
         scanf("%d",&choose);
     
     switch(choose)
     {
         case 1:
-            PrintList();
+            PrintList(&list);
             break;
         case 2:
-            InsertAtBeg();
-            PrintList();
+            InsertAtBeg(&list);
+            PrintList(&list);
             break;
         case 3:
-            InsertAtEnd();
-            PrintList();
+            InsertAtEnd(&list);
+            PrintList(&list);
             break;
         case 4:
-            InsertAtPos();
-            PrintList();
+            InsertAtPos(&list);
+            PrintList(&list);
             break;
         case 5:
-            DeleteAtBeg();
-            PrintList();
+            DeleteAtBeg(&list);
+            PrintList(&list);
             break;
         case 6:
-            DeleteAtEnd();
-            PrintList();
+            DeleteAtEnd(&list);
+            PrintList(&list);
             break;
         case 7:
-            DeleteAtPos();
-            PrintList();
+            DeleteAtPos(&list);
+            PrintList(&list);
             break;
         case 8:
-            Reversed();
-            PrintList();
+            Reversed(&list);
+            PrintList(&list);
             break;
         case 9:
+            update(&list);
+            PrintList(&list);
+            break;
+        case 10:
             printf(" you are exit from the linked list");
             break;
         default:
