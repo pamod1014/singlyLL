@@ -12,11 +12,6 @@ The goal of this project is to implement common data structures from scratch whi
 * Function-pointer based operations
 * Easy-to-use API
 * Focus on clean and reusable C code
-<<<<<<< HEAD
-*Students marks manager system
-=======
->>>>>>> 366d863a8d3802b949f05c5e652128e8f4ec83d7
-
 ## Data Structures
 
 Currently implemented:
@@ -25,9 +20,8 @@ Currently implemented:
 * [x] Doubly Linked List
 * [x] Circular Linked List
 * [x] Circular doubly Linked List
-* [ ] Queue
 * [ ] Stack
-* [ ] Circular Linked List
+* [ ] Queue
 * [ ] Binary Search Tree
 * [ ] Heap
 * [ ] Hash Table
@@ -66,8 +60,5 @@ This project is also intended to strengthen understanding of:
 
 ## License
 
-<<<<<<< HEAD
 This project is open source. A license can be added as the project develops.
-=======
-This project is open source. A license can be added as the project develops.
->>>>>>> 366d863a8d3802b949f05c5e652128e8f4ec83d7
+
