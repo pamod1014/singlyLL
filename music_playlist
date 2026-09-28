@@ -1,0 +1,291 @@
+//implement a music playlist using linkedlist 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct songnode {
+    char title[50];
+    struct songnode *next;
+};
+
+struct playList {
+    struct songnode *head;
+    struct songnode *tail;
+};
+
+struct playList* createplayList() {
+    struct playList* playlist = malloc(sizeof(struct playList));
+    if (playlist != NULL) {
+        playlist->head = NULL;
+        playlist->tail = NULL;
+    }
+    return playlist;
+}
+
+int getLength(struct playList *list) {
+    if (list == NULL){
+        return 0 ;
+    }
+    
+    int count = 0;
+    struct songnode *temp = list->head; 
+
+    while (temp != NULL) {
+        count++;
+        temp = temp->next;
+    }
+
+    return count;
+}
+
+void PrintList(struct playList *list) {
+    if (list == NULL || list->head == NULL) {
+        printf("List is empty.\n");
+        return; 
+    }
+
+    struct songnode *temp = list->head;
+    printf("Play List: ");
+
+    while (temp != NULL) {
+        printf("%s\n  ", temp->title);
+        temp = temp->next;
+    }
+
+    printf("\n");
+}
+
+void insertatbeg(struct playList *list) {
+    if (list == NULL) return;
+
+    struct songnode *newNode = malloc(sizeof(struct songnode));
+
+    printf("Enter the song title to insert at beg: ");
+    scanf("%49s", newNode->title); 
+
+    newNode->next = list->head;
+    list->head = newNode;
+
+    if (list->tail == NULL) {
+        list->tail = newNode;
+    }
+}
+
+void insertatend(struct playList *list) {
+    if (list == NULL) {
+        return;
+    }
+
+    struct songnode *newNode = malloc(sizeof(struct songnode));
+
+    printf("Enter the song title to insert at end: ");
+    scanf("%s", newNode->title); 
+    newNode->next = NULL;
+
+    if (list->head == NULL) {
+        list->head = newNode;
+        list->tail = newNode;
+    } else {
+        list->tail->next = newNode;
+        list->tail = newNode;
+    }
+}
+
+void insertatpos(struct playList *list) {
+    if (list == NULL) {
+        return;
+    }
+
+    int length = getLength(list);
+    int pos;
+    printf("Enter the position: ");
+    scanf("%d", &pos);
+
+    if (pos < 1 || pos > length + 1) {
+        printf("Invalid position!\n");
+        return;
+    }
+
+    if (pos == 1) {
+        insertatbeg(list);
+        return;
+    }
+
+    if (pos == length + 1) {
+        insertatend(list);
+        return;
+    }
+
+    struct songnode *newNode = malloc(sizeof(struct songnode));
+
+    printf("Enter the song title to insert: ");
+    scanf("%s", newNode->title);
+
+    struct songnode *temp = list->head;
+
+    for (int i = 1; i < pos - 1; i++) {
+        temp = temp->next;
+    }
+
+    newNode->next = temp->next;
+    temp->next = newNode;
+}
+
+void DeleteAtBeg(struct playList *list)
+{
+    if (list->head == NULL)
+    {
+        printf("List is empty.\n");
+        return;
+    }
+
+    struct songnode *temp = list->head;
+
+    list->head = list->head->next;
+
+    if (list->head == NULL)
+    {
+        list->tail = NULL;
+    }
+
+    free(temp);
+}
+
+
+void DeleteAtEnd(struct playList *list)
+{
+    if (list->head == NULL)
+    {
+        printf("List is empty.\n");
+        return;
+    }
+
+    if (list->head == list->tail)
+    {
+        free(list->head);
+        list->head = NULL;
+        list->tail = NULL;
+        return;
+    }
+
+    struct songnode *temp = list->head;
+
+    while (temp->next != list->tail)
+    {
+        temp = temp->next;
+    }
+
+    free(list->tail);
+
+    list->tail = temp;
+    list->tail->next = NULL;
+}
+
+
+void DeleteAtPos(struct playList *list)
+{
+    int length = getLength(list);
+    int pos;
+    printf("enter the position u want to delete:");
+    scanf("%d",&pos);
+
+    if (pos < 1 || pos > length)
+    {
+        printf("Invalid position!\n");
+        return;
+    }
+
+    if (pos == 1)
+    {
+        DeleteAtBeg(list);
+        return;
+    }
+
+    if (pos == length)
+    {
+        DeleteAtEnd(list);
+        return;
+    }
+
+    struct songnode *temp = list->head;
+
+    for (int i = 1; i < pos - 1; i++)
+    {
+        temp = temp->next;
+    }
+
+    struct songnode *deleteNode = temp->next;
+
+    temp->next = deleteNode->next;
+
+    free(deleteNode);
+}
+
+void update(struct playList *list, char *oldsong, char *newsong) {
+    if (list == NULL || list->head == NULL) {
+        printf("List is empty!\n");
+        return;
+    }
+
+    struct songnode *temp = list->head;
+    int found = 0;
+
+    while (temp != NULL) {
+        if (strcmp(temp->title, oldsong) == 0) {
+            strcpy(temp->title, newsong); 
+            found = 1;
+            printf("Song '%s' updated to '%s' successfully.\n", oldsong, newsong);
+            break;
+        }
+        temp = temp->next;
+    }
+    if (!found) {
+        printf("this song is not found in playlist\n", oldsong);
+    }
+}
+
+int main() {
+    struct playList* list = createplayList();
+
+    char oldsong[50];
+    char newsong[50];
+    printf("\ninsert at beginning\n");
+    insertatbeg(list);
+    PrintList(list);
+
+    printf("\ninsert at end\n");
+
+    insertatend(list);
+    PrintList(list);
+
+    printf("\ninsert at given position\n");
+
+    insertatpos(list);
+    PrintList(list);
+
+    printf("\nupdate the song by song\n");
+    printf("enter the oldsong:");
+    scanf("%s",oldsong);
+    printf("enter the newsong:");
+    scanf("%s",newsong);
+    update(list,oldsong,newsong);
+    PrintList(list);
+
+
+    printf("\ndelete at beginning\n");
+
+    DeleteAtBeg(list);
+    PrintList(list);
+
+    printf("\ndelete at end\n");
+
+    DeleteAtEnd(list);
+    PrintList(list);
+
+    printf("\ndelete at given position\n");
+
+    DeleteAtPos(list);
+    PrintList(list);
+
+    return 0;
+}
