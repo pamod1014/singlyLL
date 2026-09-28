@@ -33,14 +33,14 @@ void peek(){
         printf("underflow");
     }
     else{
-        printf("%d",stack[top]);
+        printf("peek element is %d",stack[top]);
     }
 }
 
 void display(){
     int i;
     for(i=top;i>=0;i--){
-        printf("%d",stack[i]);
+        printf("%d  ",stack[i]);
     }
 }
 
