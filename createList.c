@@ -10,7 +10,6 @@
  
  struct LinkedList{
  struct Node*head;
- struct Node*tail;
  struct Node*temp;
  };
 void CreateNode(struct LinkedList *list, int value){
@@ -229,7 +228,6 @@ void update(struct LinkedList *list){
 int main(){
     struct LinkedList list;
     list.head = NULL;
-    list.tail = NULL;
     list.temp = NULL;
     int choice=1;
     int choose;
@@ -257,7 +255,6 @@ int main(){
         printf("\n7.delete the node at the given position of the linked list");
         printf("\n8.reverse the linked list");
         printf("\n9.update the value");
-        printf("\n10.exit");
         printf("\nenter your choose:");
         scanf("%d",&choose);
     
@@ -274,7 +271,7 @@ int main(){
             InsertAtEnd(&list);
             PrintList(&list);
             break;
-        case 4:
+        case 4:   
             InsertAtPos(&list);
             PrintList(&list);
             break;
@@ -297,9 +294,6 @@ int main(){
         case 9:
             update(&list);
             PrintList(&list);
-            break;
-        case 10:
-            printf(" you are exit from the linked list");
             break;
         default:
             printf("invalid choose");
