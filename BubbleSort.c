@@ -58,4 +58,5 @@ int main() {
     printf("\n");
     printf("The Descending order of the elements is:\n");
     print(arr, n);
+    return 0;
 }
