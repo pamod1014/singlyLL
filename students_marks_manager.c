@@ -1,3 +1,4 @@
+//ARRAYS
 #include <stdio.h>
 
 void traverse(int marks[], int *size)//print the marks array case1

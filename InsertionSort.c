@@ -51,5 +51,5 @@ int main() {
     InsertionSortD(arr, n);                                 
     printf("\n");                                        
     printf("The Descending order of the elements is:\n");
-    print(arr, n);                                       
+    print(arr, n);   return 0;                                    
 }                                                        
